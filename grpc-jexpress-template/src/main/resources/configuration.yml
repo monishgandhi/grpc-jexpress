@@ -20,10 +20,10 @@ Tracing:
 database:
   driverClass: com.mysql.jdbc.Driver
   user: root
-  password: random
-  url: jdbc:mysql://your_database_url
+  password:
+  url: jdbc:mysql://localhost/test?zeroDateTimeBehavior=convertToNull
 
-  initialSize: 8
+  initialSize: 5
   # the minimum number of connections to keep open
   minSize: 8
 
@@ -35,7 +35,8 @@ database:
 
   # any properties specific to your JDBC driver:
   properties:
-    charSet: UTF-8
-    hibernate.generate_statistics: false
     hibernate.session.events.log: false
+    hibernate.generate_statistics: false
+    hibernate.dialect: 'org.hibernate.dialect.MySQLDialect'
+    charSet: UTF-8
 

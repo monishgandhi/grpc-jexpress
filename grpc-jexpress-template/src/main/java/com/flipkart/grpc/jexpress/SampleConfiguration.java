@@ -1,6 +1,7 @@
 package com.flipkart.grpc.jexpress;
 
 import com.flipkart.gjex.core.GJEXConfiguration;
+import com.flipkart.gjex.db.DataSourceFactory;
 import lombok.Data;
 
 import javax.validation.Valid;
@@ -11,6 +12,6 @@ public class SampleConfiguration extends GJEXConfiguration {
 
     @Valid
     @NotNull
-    private Database database;
+    private DataSourceFactory database;
 
 }
