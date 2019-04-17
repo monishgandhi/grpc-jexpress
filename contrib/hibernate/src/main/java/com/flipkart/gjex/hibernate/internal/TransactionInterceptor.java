@@ -14,10 +14,11 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
+import java.lang.reflect.Method;
 
 public class TransactionInterceptor implements MethodInterceptor, Logging {
 
-    private static final Logger logger = LoggerFactory.getLogger(TransactionInterceptor.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TransactionInterceptor.class);
 
     @Inject
     private Provider<SessionFactoryContext> sessionFactoryContextProvider;
@@ -33,16 +34,16 @@ public class TransactionInterceptor implements MethodInterceptor, Logging {
         }
         if (session == null) {
             SessionFactory sessionFactory;
-            try {
-                String name = invocation.getMethod().getAnnotation(SelectedDataSource.class).name();
-                sessionFactory = sessionFactoryContextProvider.get().getSessionFactory(name);
-            } catch (Exception ex) {
-                logger.error("Current transactional method doesn't have annotation @SelectDataSource method_name:{} {}"
-                        , invocation.getMethod().getName(), ex.getStackTrace());
-                return new Error("Something wrong with Method's annotations " + ex.getMessage());
+            SelectedDataSource selectedDataSource = getSelectedDataSource(invocation);
+            if (selectedDataSource == null) {
+                String errorFormat = String.format("Current transactional method doesn't have annotation @SelectedDataSource either " +
+                        "at @method_name %s OR @class_name %s ", invocation.getMethod().getName(), invocation.getThis().getClass());
+                LOG.info(errorFormat);
+                return new Error(errorFormat);
             }
+            String name = selectedDataSource.name();
             // open a new session and set it in local thread context.
-
+            sessionFactory = sessionFactoryContextProvider.get().getSessionFactory(name);
             session = sessionFactory.openSession();
             context.setThreadLocalSession(session);
             debug("Open new session for the thread transaction started, using it: " + invocation.getMethod().getName()
@@ -70,5 +71,19 @@ public class TransactionInterceptor implements MethodInterceptor, Logging {
                     invocation.getMethod().getDeclaringClass());
             return result;
         }
+    }
+
+    private SelectedDataSource getSelectedDataSource(MethodInvocation methodInvocation) {
+        // First try to find SelectedDataSource name at method level.
+        // If not able to find, then try at Class level.
+        SelectedDataSource selectedDataSource;
+        Method method = methodInvocation.getMethod();
+        selectedDataSource = method.getAnnotation(SelectedDataSource.class);
+        if (null == selectedDataSource) {
+            // If none on method, try the class.
+            Class<?> targetClass = methodInvocation.getThis().getClass();
+            selectedDataSource = targetClass.getAnnotation(SelectedDataSource.class);
+        }
+        return selectedDataSource;
     }
 }

@@ -9,6 +9,8 @@ import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.util.List;
 
+@Transactional
+@SelectedDataSource
 public class EmployeeDAO extends AbstractDAO<Employee> implements IEmployeeDAO {
 
     @Inject
@@ -17,8 +19,6 @@ public class EmployeeDAO extends AbstractDAO<Employee> implements IEmployeeDAO {
     }
 
     @Override
-    @Transactional
-    @SelectedDataSource
     public List<Employee> getAllEmployees() {
         Query query = namedQuery("Employee.findAll");
         List<Employee> result = query.getResultList();

@@ -13,6 +13,6 @@ import static java.lang.annotation.ElementType.TYPE;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SelectedDataSource {
 
-    String name() default "hibernate";
+    String name() default HibernateBundle.DEFAULT_NAME;
 
 }
