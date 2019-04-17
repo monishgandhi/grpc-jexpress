@@ -1,4 +1,4 @@
-package com.flipkart.gjex.hibernate;
+package com.flipkart.gjex.hibernate.internal;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.ParameterizedType;

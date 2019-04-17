@@ -1,4 +1,4 @@
-package com.flipkart.gjex.hibernate;
+package com.flipkart.gjex.hibernate.config;
 
 import com.flipkart.gjex.core.GJEXConfiguration;
 

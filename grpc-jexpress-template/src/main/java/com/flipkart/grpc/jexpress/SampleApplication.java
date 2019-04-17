@@ -7,9 +7,9 @@ import com.flipkart.gjex.core.service.Service;
 import com.flipkart.gjex.core.setup.Bootstrap;
 import com.flipkart.gjex.core.setup.Environment;
 import com.flipkart.gjex.core.tracing.TracingSampler;
-import com.flipkart.gjex.db.PooledDataSourceFactory;
 import com.flipkart.gjex.guice.GuiceBundle;
 import com.flipkart.gjex.hibernate.HibernateBundle;
+import com.flipkart.gjex.hibernate.config.HibernateModule;
 import com.flipkart.grpc.jexpress.db.Employee;
 import com.flipkart.grpc.jexpress.module.SampleModule;
 
@@ -22,6 +22,11 @@ public class SampleApplication extends Application<SampleConfiguration, Map> {
     private HibernateBundle<SampleConfiguration, Map> hibernateBundle =
 
             new HibernateBundle<SampleConfiguration, Map>(Employee.class) {
+
+                @Override
+                public Map<String, Object> getHibernateProperties(SampleConfiguration configuration) {
+                    return configuration.getHibernateProperties();
+                }
 
                 @Override
                 public List<Service> getServices() {
@@ -43,10 +48,6 @@ public class SampleApplication extends Application<SampleConfiguration, Map> {
                     return new ArrayList<>();
                 }
 
-                @Override
-                public PooledDataSourceFactory getDataSourceFactory(SampleConfiguration configuration) {
-                    return configuration.getDatabase();
-                }
             };
 
 
@@ -62,15 +63,16 @@ public class SampleApplication extends Application<SampleConfiguration, Map> {
 
     @Override
     public void initialize(Bootstrap<SampleConfiguration, Map> bootstrap) {
+        bootstrap.addBundle(hibernateBundle);
+
         GuiceBundle<SampleConfiguration, Map> guiceBundle = new GuiceBundle.Builder<SampleConfiguration, Map>()
                 .setConfigClass(SampleConfiguration.class)
-                .addModules(new SampleModule())
+                .addModules(new SampleModule(), new HibernateModule())
                 .build();
         bootstrap.addBundle(guiceBundle);
-        bootstrap.addBundle(hibernateBundle);
     }
 
-    public static void main(String [] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         SampleApplication app = new SampleApplication();
         app.run(args);
     }

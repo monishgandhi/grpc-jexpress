@@ -39,11 +39,13 @@ dependencies {
 			"com.flipkart.grpc-jexpress:runtime:1.+",
 			"com.flipkart.grpc-jexpress:guice:1.+"
 
-	compile 'org.apache.tomcat:tomcat-jdbc:9.0.17'
 	compile 'org.hibernate:hibernate-core:5.4.1.Final'
+	compile 'org.hibernate:hibernate-c3p0:5.4.1.Final'
+
 	compile 'org.jadira.usertype:usertype.core:6.0.1.GA'
 	compile 'org.hibernate:hibernate-validator:5.4.1.Final'
 
+	compile 'mysql:mysql-connector-java:5.1.38'
 	compile('com.google.guava:guava:27.1-jre') {
 		exclude group: 'com.google.code.findbugs', module: 'jsr305'
 	}

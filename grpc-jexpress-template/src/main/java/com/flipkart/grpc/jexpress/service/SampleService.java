@@ -3,6 +3,7 @@ package com.flipkart.grpc.jexpress.service;
 import com.flipkart.gjex.core.filter.MethodFilters;
 import com.flipkart.gjex.core.logging.Logging;
 import com.flipkart.grpc.jexpress.*;
+import com.flipkart.grpc.jexpress.db.IEmployeeDAO;
 import com.flipkart.grpc.jexpress.filter.CreateLoggingFilter;
 import com.flipkart.grpc.jexpress.filter.GetLoggingFilter;
 import io.grpc.stub.StreamObserver;
@@ -23,21 +24,24 @@ public class SampleService extends UserServiceGrpc.UserServiceImplBase implement
     private final SampleConfiguration sampleConfiguration;
     private final Configuration flattenedConfig;
     private final Map mapConfig;
-    private final String driverClass;
-    private final boolean hibernateGenerateEventLog;
+    private String driverClass;
+    private boolean hibernateGenerateEventLog;
+    private final IEmployeeDAO employeeDAO;
 
     @Inject
     public SampleService(SampleConfiguration sampleConfiguration,
                          @Named("GlobalFlattenedConfig") Configuration flattenedConfig,
                          @Named("GlobalMapConfig") Map mapConfig,
-                         @Named("database.driverClass") String driverClass,
-                         @Named("database.properties.hibernate.session.events.log") boolean hibernateGenerateEventLog)
+//                         @Named("database.driverClass") String driverClass,
+//                         @Named("database.properties.hibernate.session.events.log") boolean hibernateGenerateEventLog,
+                         IEmployeeDAO employeeDAO)
     {
         this.sampleConfiguration = sampleConfiguration;
         this.flattenedConfig = flattenedConfig;
         this.mapConfig = mapConfig;
-        this.driverClass = driverClass;
-        this.hibernateGenerateEventLog = hibernateGenerateEventLog;
+//        this.driverClass = driverClass;
+//        this.hibernateGenerateEventLog = hibernateGenerateEventLog;
+        this.employeeDAO = employeeDAO;
     }
 
     @Override
@@ -51,19 +55,21 @@ public class SampleService extends UserServiceGrpc.UserServiceImplBase implement
         info(sampleConfiguration.toString());
         info(mapConfig.toString());
 
-        info("\"database.driverClass\" class in @Named annotation =  " + driverClass);
-        info("\"database.properties.hibernate.session.events.log\" in @Named annotation =  " + hibernateGenerateEventLog);
+//        info("\"database.driverClass\" class in @Named annotation =  " + driverClass);
+//        info("\"database.properties.hibernate.session.events.log\" in @Named annotation =  " + hibernateGenerateEventLog);
+//
+//        // Read values from Flattened config
+//        info("FlattenedConfig has \"Grpc.server.port\" = " + flattenedConfig.getInt("Grpc.server.port"));
+//        info("FlattenedConfig has \"database.properties.hibernate.session.events.log\" = " + flattenedConfig.getBoolean("database.properties.hibernate.session.events.log"));
+//        info("FlattenedConfig has \"database.initialSize\" = " + flattenedConfig.getInt("database.initialSize"));
+//
+//        // Read values from plain map
+//        info("MapConfig of Dashboard = " + mapConfig.get("Dashboard").toString());
+//        info("MapConfig of employee = " + mapConfig.get("database").toString());
+//        Object properties = ((Map<String, Object>) mapConfig.get("database")).get("properties");
+//        info("MapConfig -> properties in database = " + properties);
 
-        // Read values from Flattened config
-        info("FlattenedConfig has \"Grpc.server.port\" = " + flattenedConfig.getInt("Grpc.server.port"));
-        info("FlattenedConfig has \"database.properties.hibernate.session.events.log\" = " + flattenedConfig.getBoolean("database.properties.hibernate.session.events.log"));
-        info("FlattenedConfig has \"database.initialSize\" = " + flattenedConfig.getInt("database.initialSize"));
-
-        // Read values from plain map
-        info("MapConfig of Dashboard = " + mapConfig.get("Dashboard").toString());
-        info("MapConfig of employee = " + mapConfig.get("database").toString());
-        Object properties = ((Map<String, Object>) mapConfig.get("database")).get("properties");
-        info("MapConfig -> properties in database = " + properties);
+        info("Get All Employees " + employeeDAO.getAllEmployees());
     }
 
     @Override
@@ -78,4 +84,5 @@ public class SampleService extends UserServiceGrpc.UserServiceImplBase implement
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
+
 }

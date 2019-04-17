@@ -1,17 +1,17 @@
 package com.flipkart.grpc.jexpress;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.flipkart.gjex.core.GJEXConfiguration;
-import com.flipkart.gjex.db.DataSourceFactory;
 import lombok.Data;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import java.util.Map;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SampleConfiguration extends GJEXConfiguration {
 
-    @Valid
-    @NotNull
-    private DataSourceFactory database;
+    private Map<String, Object> hibernateProperties;
 
+//    @JsonProperty("database")
+//    private DataSourceFactory dataSourceFactory;
 }

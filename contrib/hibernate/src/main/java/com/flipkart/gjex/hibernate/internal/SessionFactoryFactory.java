@@ -1,5 +1,6 @@
-package com.flipkart.gjex.hibernate;
+package com.flipkart.gjex.hibernate.internal;
 
+import com.flipkart.gjex.hibernate.HibernateBundle;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.AvailableSettings;
@@ -40,15 +41,10 @@ public class SessionFactoryFactory {
             configProperties.put(propertyKey, propertyValue);
         }
         configuration.addProperties(configProperties);
-        final ServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .applySettings(configuration.getProperties())
-                .build();
-
-        configure(configuration, registry);
-        return configuration.buildSessionFactory(registry);
+        return configuration.buildSessionFactory();
     }
 
-    protected void configure(Configuration configuration, ServiceRegistry registry) {
+    protected void configure(Configuration configuration) {
 
     }
 

@@ -1,4 +1,4 @@
-package com.flipkart.gjex.hibernate;
+package com.flipkart.gjex.hibernate.internal;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;

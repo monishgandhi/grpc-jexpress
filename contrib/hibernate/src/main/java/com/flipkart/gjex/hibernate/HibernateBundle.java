@@ -4,6 +4,9 @@ import com.flipkart.gjex.core.Bundle;
 import com.flipkart.gjex.core.GJEXConfiguration;
 import com.flipkart.gjex.core.setup.Bootstrap;
 import com.flipkart.gjex.core.setup.Environment;
+import com.flipkart.gjex.hibernate.config.DatabaseConfiguration;
+import com.flipkart.gjex.hibernate.internal.SessionFactoryFactory;
+import com.flipkart.gjex.hibernate.internal.SessionFactoryManager;
 import com.google.common.collect.ImmutableList;
 import org.hibernate.SessionFactory;
 

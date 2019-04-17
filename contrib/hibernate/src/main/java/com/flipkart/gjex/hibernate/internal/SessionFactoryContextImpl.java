@@ -1,5 +1,6 @@
-package com.flipkart.gjex.hibernate;
+package com.flipkart.gjex.hibernate.internal;
 
+import com.flipkart.gjex.hibernate.SessionFactoryContext;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 

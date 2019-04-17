@@ -1,6 +1,8 @@
-package com.flipkart.gjex.hibernate;
+package com.flipkart.gjex.hibernate.internal;
 
 import com.flipkart.gjex.core.logging.Logging;
+import com.flipkart.gjex.hibernate.SelectedDataSource;
+import com.flipkart.gjex.hibernate.SessionFactoryContext;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.hibernate.HibernateException;
