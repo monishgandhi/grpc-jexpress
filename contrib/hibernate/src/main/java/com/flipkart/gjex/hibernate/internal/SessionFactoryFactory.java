@@ -24,6 +24,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
+/**
+ * @author anand.pandey
+ */
 public class SessionFactoryFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SessionFactoryFactory.class);

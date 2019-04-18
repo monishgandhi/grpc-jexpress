@@ -28,6 +28,9 @@ import org.hibernate.SessionFactory;
 import javax.transaction.Transactional;
 import java.util.Map;
 
+/**
+ * @author anand.pandey
+ */
 public class HibernateModule extends AbstractModule {
 
     @Override

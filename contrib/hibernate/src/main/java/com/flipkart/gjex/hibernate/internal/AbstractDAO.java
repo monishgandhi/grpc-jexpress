@@ -33,6 +33,7 @@ import static java.util.Objects.requireNonNull;
  * An abstract base class for Hibernate DAO classes.
  *
  * @param <E> the class which this DAO manages
+ * @author anand.pandey
  */
 public class AbstractDAO<E> {
     private final SessionFactoryContext sessionFactoryContext;

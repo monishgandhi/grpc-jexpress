@@ -21,6 +21,9 @@ import org.hibernate.SessionFactory;
 
 import java.util.Map;
 
+/**
+ * @author anand.pandey
+ */
 public class SessionFactoryContextImpl implements SessionFactoryContext {
 
     private Map<String, SessionFactory> sessionFactories;

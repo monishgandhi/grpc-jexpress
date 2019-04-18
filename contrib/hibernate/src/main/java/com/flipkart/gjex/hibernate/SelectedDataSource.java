@@ -23,6 +23,9 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
 
+/**
+ * @author anand.pandey
+ */
 @Inherited
 @Target({TYPE, METHOD})
 @Retention(RetentionPolicy.RUNTIME)

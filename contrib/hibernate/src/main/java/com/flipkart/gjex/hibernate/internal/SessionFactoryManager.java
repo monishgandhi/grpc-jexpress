@@ -22,6 +22,9 @@ import org.hibernate.SessionFactory;
 
 import java.util.Map;
 
+/**
+ * @author anand.pandey
+ */
 public enum SessionFactoryManager {
 
     INSTANCE;

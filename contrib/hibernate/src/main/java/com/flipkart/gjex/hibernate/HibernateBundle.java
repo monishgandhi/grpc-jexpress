@@ -27,6 +27,9 @@ import org.hibernate.SessionFactory;
 
 import java.util.Map;
 
+/**
+ * @author anand.pandey
+ */
 public abstract class HibernateBundle<T extends GJEXConfiguration, U extends Map> implements Bundle<T, U>, DatabaseConfiguration<T> {
 
     public static final String DEFAULT_NAME = "hibernate";
