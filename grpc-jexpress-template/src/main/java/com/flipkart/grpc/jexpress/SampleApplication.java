@@ -70,6 +70,7 @@ public class SampleApplication extends Application<SampleConfiguration, Map> {
                 .addModules(new SampleModule(), new HibernateModule())
                 .build();
         bootstrap.addBundle(guiceBundle);
+
     }
 
     public static void main(String[] args) throws Exception {
