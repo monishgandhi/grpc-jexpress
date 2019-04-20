@@ -70,7 +70,7 @@ public abstract class HibernateBundle<T extends GJEXConfiguration, U extends Map
     public void run(T configuration, U configMap, Environment environment) {
         this.configuration = configuration;
         this.configMap = configMap;
-        HibernateDataSourceFactory dataSourceFactory = getHibernateDataSourceFactory(configuration);
+        HibernateDataSourceFactory dataSourceFactory = getDataSourceFactory(configuration);
         final Map<String, String> hibernateConfig = dataSourceFactory.getProperties();
         this.sessionFactory = sessionFactoryFactory.build(this, hibernateConfig, entities);
         SessionFactoryManager.getInstance().registerSessionFactory(name(), sessionFactory);

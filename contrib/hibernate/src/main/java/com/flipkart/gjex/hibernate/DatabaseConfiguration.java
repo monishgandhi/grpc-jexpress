@@ -22,6 +22,6 @@ import com.flipkart.gjex.core.GJEXConfiguration;
  */
 public interface DatabaseConfiguration<T extends GJEXConfiguration> {
 
-    HibernateDataSourceFactory getHibernateDataSourceFactory(T configuration);
+    HibernateDataSourceFactory getDataSourceFactory(T configuration);
 
 }

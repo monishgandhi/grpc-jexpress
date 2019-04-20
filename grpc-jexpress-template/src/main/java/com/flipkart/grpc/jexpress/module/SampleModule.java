@@ -3,8 +3,8 @@ package com.flipkart.grpc.jexpress.module;
 import com.codahale.metrics.health.HealthCheck;
 import com.flipkart.gjex.core.filter.Filter;
 import com.flipkart.gjex.core.tracing.TracingSampler;
-import com.flipkart.grpc.jexpress.db.EmployeeDAO;
-import com.flipkart.grpc.jexpress.db.IEmployeeDAO;
+import com.flipkart.grpc.jexpress.db.IUserDAO;
+import com.flipkart.grpc.jexpress.db.UserDAO;
 import com.flipkart.grpc.jexpress.filter.CreateLoggingFilter;
 import com.flipkart.grpc.jexpress.filter.GetLoggingFilter;
 import com.flipkart.grpc.jexpress.healthcheck.AllIsWellHealthCheck;
@@ -24,7 +24,7 @@ public class SampleModule extends AbstractModule {
         bind(Filter.class).annotatedWith(Names.named("CreateLoggingFilter")).to(CreateLoggingFilter.class);
         bind(TracingSampler.class).to(AllWhitelistTracingSampler.class);
 
-        bind(IEmployeeDAO.class).to(EmployeeDAO.class).in(Singleton.class);
+        bind(IUserDAO.class).to(UserDAO.class).in(Singleton.class);
 
     }
 }

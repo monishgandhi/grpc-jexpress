@@ -51,7 +51,6 @@ public class SessionFactoryFactory {
         Configuration configuration = new Configuration();
         configuration.setProperty(AvailableSettings.CURRENT_SESSION_CONTEXT_CLASS, "managed");
         configuration.setProperty(AvailableSettings.USE_GET_GENERATED_KEYS, "true");
-        configuration.setProperty(AvailableSettings.GENERATE_STATISTICS, "true");
         configuration.setProperty(AvailableSettings.USE_REFLECTION_OPTIMIZER, "true");
         configuration.setProperty(AvailableSettings.ORDER_UPDATES, "true");
         configuration.setProperty(AvailableSettings.ORDER_INSERTS, "true");

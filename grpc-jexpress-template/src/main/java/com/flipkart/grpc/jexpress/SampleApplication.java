@@ -9,10 +9,10 @@ import com.flipkart.gjex.core.setup.Environment;
 import com.flipkart.gjex.core.tracing.TracingSampler;
 import com.flipkart.gjex.guice.GuiceBundle;
 import com.flipkart.gjex.hibernate.HibernateBundle;
+import com.flipkart.gjex.hibernate.HibernateDataSourceFactory;
 import com.flipkart.gjex.hibernate.config.HibernateModule;
-import com.flipkart.grpc.jexpress.db.Employee;
+import com.flipkart.grpc.jexpress.db.User;
 import com.flipkart.grpc.jexpress.module.SampleModule;
-import org.hibernate.cfg.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +22,11 @@ public class SampleApplication extends Application<SampleConfiguration, Map> {
 
     private HibernateBundle<SampleConfiguration, Map> hibernateBundle =
 
-            new HibernateBundle<SampleConfiguration, Map>(Employee.class) {
+            new HibernateBundle<SampleConfiguration, Map>(User.class) {
 
                 @Override
-                public Map<String, Object> getHibernateProperties(SampleConfiguration configuration) {
-                    return configuration.getHibernateProperties();
+                public HibernateDataSourceFactory getDataSourceFactory(SampleConfiguration configuration) {
+                    return configuration.getDataSourceFactory();
                 }
 
                 @Override

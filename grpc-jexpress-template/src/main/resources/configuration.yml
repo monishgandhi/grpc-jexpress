@@ -17,12 +17,16 @@ Api:
 Tracing:
   collector.endpoint: http://localhost:9411/api/v2/spans
 
-hibernateProperties:
-  hibernate.dialect: "org.hibernate.dialect.MySQLDialect"
-  hibernate.connection.driver_class: "com.mysql.jdbc.Driver"
-  hibernate.connection.url: "jdbc:mysql://localhost:3306/test"
-  hibernate.connection.username: "root"
-  hibernate.connection.password: ""
-  connection.provider_class: "org.hibernate.c3p0.internal.C3P0ConnectionProvider"
-  hibernate.c3p0.min_size: 3
-  hibernate.c3p0.max_size: 10
+database:
+    validationQuery: "select 1"
+    validationQueryTimeoutInSeconds: 3
+    properties:
+        hibernate.hbm2ddl.auto: "validate"
+        hibernate.dialect: "org.hibernate.dialect.MySQLInnoDBDialect"
+        hibernate.connection.driver_class: "com.mysql.jdbc.Driver"
+        hibernate.connection.url: "jdbc:mysql://localhost:3306/test"
+        hibernate.connection.username: "root"
+        hibernate.connection.password: ""
+        connection.provider_class: "org.hibernate.c3p0.internal.C3P0ConnectionProvider"
+        hibernate.c3p0.min_size: 3
+        hibernate.c3p0.max_size: 10
