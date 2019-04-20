@@ -1,6 +1,7 @@
-package com.flipkart.gjex.hibernate;
+package com.flipkart.gjex.hibernate.internal;
 
 import com.codahale.metrics.health.HealthCheck;
+import com.flipkart.gjex.hibernate.internal.TimeBoundHealthCheck;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

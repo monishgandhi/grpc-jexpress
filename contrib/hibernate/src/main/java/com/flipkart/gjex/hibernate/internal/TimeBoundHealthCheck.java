@@ -1,4 +1,4 @@
-package com.flipkart.gjex.hibernate;
+package com.flipkart.gjex.hibernate.internal;
 
 import com.codahale.metrics.health.HealthCheck;
 
