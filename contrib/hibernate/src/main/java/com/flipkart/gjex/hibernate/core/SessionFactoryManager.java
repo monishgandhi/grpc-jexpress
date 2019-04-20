@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.flipkart.gjex.hibernate.internal;
+package com.flipkart.gjex.hibernate.core;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;

@@ -29,6 +29,8 @@ import java.lang.annotation.*;
  * the {@link #rollbackOn()} clause. By default, only unchecked exceptions trigger a
  * rollback.
  *
+ * Nested transactions are currently NOT supported.
+ *
  * @author anand.pandey
  */
 @Target({ ElementType.METHOD, ElementType.TYPE })

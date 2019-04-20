@@ -31,8 +31,16 @@ public interface SessionFactoryContext {
      */
     SessionFactory getSessionFactory(String name);
 
+    /**
+     *
+     * @return returns session for ongoing transaction in current thread
+     */
     Session getThreadLocalSession();
 
+    /**
+     *
+     * @param session sets session
+     */
     void setThreadLocalSession(Session session);
 
     /**

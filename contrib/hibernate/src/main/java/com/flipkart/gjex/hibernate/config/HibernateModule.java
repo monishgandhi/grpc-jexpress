@@ -17,9 +17,9 @@ package com.flipkart.gjex.hibernate.config;
 
 import com.flipkart.gjex.hibernate.SessionFactoryContext;
 import com.flipkart.gjex.hibernate.Transactional;
-import com.flipkart.gjex.hibernate.internal.SessionFactoryContextImpl;
-import com.flipkart.gjex.hibernate.internal.SessionFactoryManager;
-import com.flipkart.gjex.hibernate.internal.TransactionInterceptor;
+import com.flipkart.gjex.hibernate.core.SessionFactoryContextImpl;
+import com.flipkart.gjex.hibernate.core.SessionFactoryManager;
+import com.flipkart.gjex.hibernate.core.TransactionInterceptor;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
