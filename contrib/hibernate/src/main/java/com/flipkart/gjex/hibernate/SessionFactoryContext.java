@@ -23,12 +23,21 @@ import org.hibernate.SessionFactory;
  */
 public interface SessionFactoryContext {
 
+    /**
+     * Returns session factory associated with given hibernate bundle "name"
+     *
+     * @param name Hibernate Bundle name
+     * @return SessionFactory associated with given hibernate bundle
+     */
     SessionFactory getSessionFactory(String name);
 
     Session getThreadLocalSession();
 
     void setThreadLocalSession(Session session);
 
+    /**
+     * Clear the context.
+     */
     void clear();
 
 }

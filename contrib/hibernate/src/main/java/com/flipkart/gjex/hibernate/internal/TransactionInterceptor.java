@@ -15,7 +15,6 @@
  */
 package com.flipkart.gjex.hibernate.internal;
 
-import com.flipkart.gjex.core.logging.Logging;
 import com.flipkart.gjex.hibernate.SelectedDataSource;
 import com.flipkart.gjex.hibernate.SessionFactoryContext;
 import com.flipkart.gjex.hibernate.Transactional;
@@ -58,7 +57,7 @@ public class TransactionInterceptor implements MethodInterceptor {
             }
             String name = selectedDataSource.name();
             // open a new session and set it in local thread context.
-            SessionFactory sessionFactory = sessionFactoryContextProvider.get().getSessionFactory(name);
+            SessionFactory sessionFactory = context.getSessionFactory(name);
             if (sessionFactory == null) {
                 String errorMsg = "No session factory found for hibernate bundle " + name;
                 LOG.error(errorMsg);

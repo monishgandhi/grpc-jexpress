@@ -15,6 +15,7 @@
  */
 package com.flipkart.gjex.hibernate;
 
+import com.codahale.metrics.health.HealthCheck;
 import com.flipkart.gjex.core.Bundle;
 import com.flipkart.gjex.core.GJEXConfiguration;
 import com.flipkart.gjex.core.setup.Bootstrap;
@@ -22,8 +23,10 @@ import com.flipkart.gjex.core.setup.Environment;
 import com.flipkart.gjex.hibernate.internal.SessionFactoryFactory;
 import com.flipkart.gjex.hibernate.internal.SessionFactoryManager;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import org.hibernate.SessionFactory;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,21 +35,19 @@ import java.util.Map;
 public abstract class HibernateBundle<T extends GJEXConfiguration, U extends Map> implements Bundle<T, U>, DatabaseConfiguration<T> {
 
     public static final String DEFAULT_NAME = "hibernate";
+    private final List<HealthCheck> healthChecks = Lists.newLinkedList();
+    private final ImmutableList<Class<?>> entities;
+    private final SessionFactoryFactory sessionFactoryFactory;
 
     private SessionFactory sessionFactory;
     private T configuration;
     private U configMap;
 
-    private final ImmutableList<Class<?>> entities;
-    private final SessionFactoryFactory sessionFactoryFactory;
-
     protected HibernateBundle(Class<?> entity, Class<?>... entities) {
-        this(ImmutableList.<Class<?>>builder().add(entity).add(entities).build(),
-                new SessionFactoryFactory());
+        this(ImmutableList.<Class<?>>builder().add(entity).add(entities).build(), new SessionFactoryFactory());
     }
 
-    protected HibernateBundle(ImmutableList<Class<?>> entities,
-                              SessionFactoryFactory sessionFactoryFactory) {
+    protected HibernateBundle(ImmutableList<Class<?>> entities, SessionFactoryFactory sessionFactoryFactory) {
         this.entities = entities;
         this.sessionFactoryFactory = sessionFactoryFactory;
     }
@@ -68,9 +69,13 @@ public abstract class HibernateBundle<T extends GJEXConfiguration, U extends Map
     public void run(T configuration, U configMap, Environment environment) {
         this.configuration = configuration;
         this.configMap = configMap;
-        final Map<String, Object> hibernateConfig = getHibernateProperties(configuration);
+        HibernateDataSourceFactory dataSourceFactory = getHibernateDataSourceFactory(configuration);
+        final Map<String, String> hibernateConfig = dataSourceFactory.getProperties();
         this.sessionFactory = sessionFactoryFactory.build(this, hibernateConfig, entities);
         SessionFactoryManager.getInstance().registerSessionFactory(name(), sessionFactory);
+        SessionFactoryHealthCheck healthCheck = new SessionFactoryHealthCheck(sessionFactory, dataSourceFactory.getValidationQuery(),
+                dataSourceFactory.getValidationQueryTimeoutInSeconds());
+        healthChecks.add(healthCheck);
     }
 
     public void configure(org.hibernate.cfg.Configuration configuration) {
@@ -87,4 +92,10 @@ public abstract class HibernateBundle<T extends GJEXConfiguration, U extends Map
     public U getConfigMap() {
         return configMap;
     }
+
+    @Override
+    public List<HealthCheck> getHealthChecks() {
+        return healthChecks;
+    }
+
 }

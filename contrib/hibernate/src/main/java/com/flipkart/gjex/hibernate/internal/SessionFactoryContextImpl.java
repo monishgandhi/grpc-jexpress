@@ -28,8 +28,8 @@ import java.util.Map;
  */
 public class SessionFactoryContextImpl implements SessionFactoryContext {
 
-    private Map<String, SessionFactory> sessionFactories;
-    private final ThreadLocal<Session> currentSessionFactoryContext = new ThreadLocal<>();
+    private final Map<String, SessionFactory> sessionFactories;
+    private final ThreadLocal<Session> currentSession = new ThreadLocal<>();
 
     @Inject
     public SessionFactoryContextImpl(@Named("sessionFactories") Map<String, SessionFactory> sessionFactories) {
@@ -43,17 +43,17 @@ public class SessionFactoryContextImpl implements SessionFactoryContext {
 
     @Override
     public Session getThreadLocalSession() {
-        return currentSessionFactoryContext.get();
+        return currentSession.get();
     }
 
     @Override
     public void setThreadLocalSession(Session session) {
-        currentSessionFactoryContext.set(session);
+        currentSession.set(session);
     }
 
     @Override
     public void clear() {
-        currentSessionFactoryContext.remove();
+        currentSession.remove();
     }
 
 }

@@ -31,14 +31,14 @@ public class SessionFactoryFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SessionFactoryFactory.class);
 
-    public SessionFactory build(HibernateBundle<?, ?> bundle, Map<String, Object> hibernateConfig,
+    public SessionFactory build(HibernateBundle<?, ?> bundle, Map<String, String> hibernateProperties,
                                 List<Class<?>> entities) {
         final Configuration configuration = getDefaultConfiguration();
-        Iterator<String> propertyKeys = hibernateConfig.keySet().iterator();
+        Iterator<String> propertyKeys = hibernateProperties.keySet().iterator();
         Properties configProperties = new Properties();
         while (propertyKeys.hasNext()) {
             String propertyKey = propertyKeys.next();
-            Object propertyValue = hibernateConfig.get(propertyKey);
+            Object propertyValue = hibernateProperties.get(propertyKey);
             configProperties.put(propertyKey, propertyValue);
         }
         configuration.addProperties(configProperties);

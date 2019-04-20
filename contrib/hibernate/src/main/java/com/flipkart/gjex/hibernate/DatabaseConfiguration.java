@@ -17,13 +17,11 @@ package com.flipkart.gjex.hibernate;
 
 import com.flipkart.gjex.core.GJEXConfiguration;
 
-import java.util.Map;
-
 /**
  * @author anand.pandey
  */
 public interface DatabaseConfiguration<T extends GJEXConfiguration> {
 
-    Map<String, Object> getHibernateProperties(T configuration);
+    HibernateDataSourceFactory getHibernateDataSourceFactory(T configuration);
 
 }
