@@ -9,6 +9,13 @@ import javax.inject.Inject;
 import javax.persistence.Query;
 import java.util.List;
 
+
+/**
+ * @Transactional and @SelectedDataSource together can be added at both either method level OR class level OR both.
+ * When added at class level, it means ALL methods inside that class will support @Transactional semantics.
+ * When added at method level, it means @Transactional semantics will start at the beginning of this method.
+ *
+ */
 @Transactional
 @SelectedDataSource
 public class UserDAO extends AbstractDAO<User> implements IUserDAO {

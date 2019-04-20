@@ -32,19 +32,19 @@ public interface SessionFactoryContext {
     SessionFactory getSessionFactory(String name);
 
     /**
-     *
-     * @return returns session for ongoing transaction in current thread
+     * Get the session for the current thread context to be used for the ongoing transaction.
+     * @return
      */
     Session getThreadLocalSession();
 
     /**
-     *
-     * @param session sets session
+     *  Sets session for the current thread context to be used for the ongoing transaction.
+     * @param session
      */
     void setThreadLocalSession(Session session);
 
     /**
-     * Clear the context.
+     * Removes session from thread local context.
      */
     void clear();
 
