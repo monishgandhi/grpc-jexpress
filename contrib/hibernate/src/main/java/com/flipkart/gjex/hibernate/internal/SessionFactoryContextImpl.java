@@ -19,6 +19,8 @@ import com.flipkart.gjex.hibernate.SessionFactoryContext;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.Map;
 
 /**
@@ -29,7 +31,8 @@ public class SessionFactoryContextImpl implements SessionFactoryContext {
     private Map<String, SessionFactory> sessionFactories;
     private final ThreadLocal<Session> currentSessionFactoryContext = new ThreadLocal<>();
 
-    public SessionFactoryContextImpl(Map<String, SessionFactory> sessionFactories) {
+    @Inject
+    public SessionFactoryContextImpl(@Named("sessionFactories") Map<String, SessionFactory> sessionFactories) {
         this.sessionFactories = sessionFactories;
     }
 

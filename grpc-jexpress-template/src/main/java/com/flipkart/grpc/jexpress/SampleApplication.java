@@ -12,6 +12,7 @@ import com.flipkart.gjex.hibernate.HibernateBundle;
 import com.flipkart.gjex.hibernate.config.HibernateModule;
 import com.flipkart.grpc.jexpress.db.Employee;
 import com.flipkart.grpc.jexpress.module.SampleModule;
+import org.hibernate.cfg.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,6 @@ public class SampleApplication extends Application<SampleConfiguration, Map> {
                 public List<TracingSampler> getTracingSamplers() {
                     return new ArrayList<>();
                 }
-
             };
 
 

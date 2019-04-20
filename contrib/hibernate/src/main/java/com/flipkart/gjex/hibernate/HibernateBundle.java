@@ -19,7 +19,6 @@ import com.flipkart.gjex.core.Bundle;
 import com.flipkart.gjex.core.GJEXConfiguration;
 import com.flipkart.gjex.core.setup.Bootstrap;
 import com.flipkart.gjex.core.setup.Environment;
-import com.flipkart.gjex.hibernate.config.DatabaseConfiguration;
 import com.flipkart.gjex.hibernate.internal.SessionFactoryFactory;
 import com.flipkart.gjex.hibernate.internal.SessionFactoryManager;
 import com.google.common.collect.ImmutableList;
@@ -35,6 +34,8 @@ public abstract class HibernateBundle<T extends GJEXConfiguration, U extends Map
     public static final String DEFAULT_NAME = "hibernate";
 
     private SessionFactory sessionFactory;
+    private T configuration;
+    private U configMap;
 
     private final ImmutableList<Class<?>> entities;
     private final SessionFactoryFactory sessionFactoryFactory;
@@ -65,15 +66,25 @@ public abstract class HibernateBundle<T extends GJEXConfiguration, U extends Map
 
     @Override
     public void run(T configuration, U configMap, Environment environment) {
+        this.configuration = configuration;
+        this.configMap = configMap;
         final Map<String, Object> hibernateConfig = getHibernateProperties(configuration);
-        this.sessionFactory = sessionFactoryFactory.build(this, hibernateConfig, entities, name());
+        this.sessionFactory = sessionFactoryFactory.build(this, hibernateConfig, entities);
         SessionFactoryManager.getInstance().registerSessionFactory(name(), sessionFactory);
     }
 
-    protected void configure(org.hibernate.cfg.Configuration configuration) {
+    public void configure(org.hibernate.cfg.Configuration configuration) {
     }
 
     public SessionFactory getSessionFactory() {
         return sessionFactory;
+    }
+
+    public T getConfiguration() {
+        return configuration;
+    }
+
+    public U getConfigMap() {
+        return configMap;
     }
 }

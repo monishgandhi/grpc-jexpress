@@ -15,6 +15,9 @@
  */
 package com.flipkart.gjex.hibernate;
 
+import org.hibernate.CacheMode;
+import org.hibernate.FlushMode;
+
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -31,6 +34,26 @@ import static java.lang.annotation.ElementType.TYPE;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SelectedDataSource {
 
+    /**
+     * The name of a hibernate bundle (session factory) that specifies
+     * a data source against which a transaction will be opened.
+     */
     String name() default HibernateBundle.DEFAULT_NAME;
+
+    /**
+     * The {@link CacheMode} for the session.
+     *
+     * @see CacheMode
+     * @see org.hibernate.Session#setCacheMode(CacheMode)
+     */
+    CacheMode cacheMode() default CacheMode.NORMAL;
+
+    /**
+     * The {@link FlushMode} for the session.
+     *
+     * @see FlushMode
+     * @see org.hibernate.Session#setFlushMode(org.hibernate.FlushMode)
+     */
+    FlushMode flushMode() default FlushMode.AUTO;
 
 }

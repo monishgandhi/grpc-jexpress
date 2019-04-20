@@ -30,25 +30,10 @@ import java.util.*;
 public class SessionFactoryFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SessionFactoryFactory.class);
-    private static final String DEFAULT_NAME = "hibernate";
 
     public SessionFactory build(HibernateBundle<?, ?> bundle, Map<String, Object> hibernateConfig,
                                 List<Class<?>> entities) {
-        return build(bundle, hibernateConfig, entities, DEFAULT_NAME);
-    }
-
-    public SessionFactory build(HibernateBundle<?, ?> bundle, Map<String, Object> hibernateConfig,
-                                List<Class<?>> entities, String name) {
-        final Configuration configuration = new Configuration();
-        configuration.setProperty(AvailableSettings.CURRENT_SESSION_CONTEXT_CLASS, "managed");
-        configuration.setProperty(AvailableSettings.USE_GET_GENERATED_KEYS, "true");
-        configuration.setProperty(AvailableSettings.GENERATE_STATISTICS, "true");
-        configuration.setProperty(AvailableSettings.USE_REFLECTION_OPTIMIZER, "true");
-        configuration.setProperty(AvailableSettings.ORDER_UPDATES, "true");
-        configuration.setProperty(AvailableSettings.ORDER_INSERTS, "true");
-        configuration.setProperty(AvailableSettings.USE_NEW_ID_GENERATOR_MAPPINGS, "true");
-        configuration.setProperty("jadira.usertype.autoRegisterUserTypes", "true");
-        addAnnotatedClasses(configuration, entities);
+        final Configuration configuration = getDefaultConfiguration();
         Iterator<String> propertyKeys = hibernateConfig.keySet().iterator();
         Properties configProperties = new Properties();
         while (propertyKeys.hasNext()) {
@@ -57,11 +42,22 @@ public class SessionFactoryFactory {
             configProperties.put(propertyKey, propertyValue);
         }
         configuration.addProperties(configProperties);
+        addAnnotatedClasses(configuration, entities);
+        bundle.configure(configuration);
         return configuration.buildSessionFactory();
     }
 
-    protected void configure(Configuration configuration) {
-
+    private Configuration getDefaultConfiguration() {
+        Configuration configuration = new Configuration();
+        configuration.setProperty(AvailableSettings.CURRENT_SESSION_CONTEXT_CLASS, "managed");
+        configuration.setProperty(AvailableSettings.USE_GET_GENERATED_KEYS, "true");
+        configuration.setProperty(AvailableSettings.GENERATE_STATISTICS, "true");
+        configuration.setProperty(AvailableSettings.USE_REFLECTION_OPTIMIZER, "true");
+        configuration.setProperty(AvailableSettings.ORDER_UPDATES, "true");
+        configuration.setProperty(AvailableSettings.ORDER_INSERTS, "true");
+        configuration.setProperty(AvailableSettings.USE_NEW_ID_GENERATOR_MAPPINGS, "true");
+        configuration.setProperty("jadira.usertype.autoRegisterUserTypes", "true");
+        return configuration;
     }
 
     private void addAnnotatedClasses(Configuration configuration,

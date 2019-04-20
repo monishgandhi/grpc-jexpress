@@ -16,6 +16,7 @@
 package com.flipkart.gjex.hibernate.config;
 
 import com.flipkart.gjex.hibernate.SessionFactoryContext;
+import com.flipkart.gjex.hibernate.Transactional;
 import com.flipkart.gjex.hibernate.internal.SessionFactoryContextImpl;
 import com.flipkart.gjex.hibernate.internal.SessionFactoryManager;
 import com.flipkart.gjex.hibernate.internal.TransactionInterceptor;
@@ -25,7 +26,7 @@ import com.google.inject.Singleton;
 import com.google.inject.matcher.Matchers;
 import org.hibernate.SessionFactory;
 
-import javax.transaction.Transactional;
+import javax.inject.Named;
 import java.util.Map;
 
 /**
@@ -39,12 +40,14 @@ public class HibernateModule extends AbstractModule {
         requestInjection(txnInterceptor);
         bindInterceptor(Matchers.any(), Matchers.annotatedWith(Transactional.class), txnInterceptor);
         bindInterceptor(Matchers.annotatedWith(Transactional.class), Matchers.any(), txnInterceptor);
+
+        bind(SessionFactoryContext.class).to(SessionFactoryContextImpl.class).in(Singleton.class);
     }
 
     @Singleton
     @Provides
-    public SessionFactoryContext providesSessionFactoryContext() {
-        Map<String, SessionFactory> sessionFactories = SessionFactoryManager.getInstance().getAllSessionFactories();
-        return new SessionFactoryContextImpl(sessionFactories);
+    @Named("sessionFactories")
+    public Map<String, SessionFactory> providesSessionFactories() {
+        return SessionFactoryManager.getInstance().getAllSessionFactories();
     }
 }
