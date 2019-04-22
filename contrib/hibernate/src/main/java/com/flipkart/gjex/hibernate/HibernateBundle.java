@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * When using {@link HibernateBundle}, please make sure it is added in {@link Bootstrap} before {@link com.flipkart.gjex.guice.GuiceBundle}
+ * in {@link com.flipkart.gjex.core.Application} class
  * @author anand.pandey
  */
 public abstract class HibernateBundle<T extends GJEXConfiguration, U extends Map> implements Bundle<T, U>, DatabaseConfiguration<T> {
