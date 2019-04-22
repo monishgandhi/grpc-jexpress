@@ -38,7 +38,11 @@ public class HibernateModule extends AbstractModule {
     protected void configure() {
         final TransactionInterceptor txnInterceptor = new TransactionInterceptor();
         requestInjection(txnInterceptor);
+
+        // method-level @Transactional
         bindInterceptor(Matchers.any(), Matchers.annotatedWith(Transactional.class), txnInterceptor);
+
+        // class-level @Transactional
         bindInterceptor(Matchers.annotatedWith(Transactional.class), Matchers.any(), txnInterceptor);
 
         bind(SessionFactoryContext.class).to(SessionFactoryContextImpl.class).in(Singleton.class);

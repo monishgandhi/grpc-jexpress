@@ -27,6 +27,13 @@ import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
 
 /**
+ * This annotation has to be compulsorily used whenever {@link Transactional} is used.
+ *
+ * It specifies name of HibernateBundle whose {@link org.hibernate.SessionFactory} will be used for
+ * creating {@link org.hibernate.Session}.
+ *
+ * Other {@link org.hibernate.Session} properties can also be configured.
+ *
  * @author anand.pandey
  */
 @Inherited

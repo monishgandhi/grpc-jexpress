@@ -29,7 +29,9 @@ import java.lang.annotation.*;
  * the {@link #rollbackOn()} clause. By default, only unchecked exceptions trigger a
  * rollback.
  *
- * Nested transactions are currently NOT supported.
+ * <p>Nested transactions are currently NOT supported.</p>
+ *
+ * Please refer {@link SelectedDataSource} as well for {@link Transactional} usage.
  *
  * @author anand.pandey
  */

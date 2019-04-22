@@ -35,27 +35,19 @@ publishing {
 
 dependencies {
 
-	compile "com.flipkart.grpc-jexpress:core:1.+",
-			"com.flipkart.grpc-jexpress:runtime:1.+",
-			"com.flipkart.grpc-jexpress:guice:1.+"
+	compile "com.flipkart.grpc-jexpress:core:1.2-SNAPSHOT",
+			"com.flipkart.grpc-jexpress:runtime:1.2-SNAPSHOT",
+			"com.flipkart.grpc-jexpress:guice:1.2-SNAPSHOT"
 
 	compile 'org.hibernate:hibernate-core:5.4.1.Final'
-	compile 'org.hibernate:hibernate-c3p0:5.4.1.Final'
-
-	compile 'org.jadira.usertype:usertype.core:6.0.1.GA'
 	compile 'org.hibernate:hibernate-validator:5.4.1.Final'
-
 	compile 'mysql:mysql-connector-java:5.1.38'
+
 	compile('com.google.guava:guava:27.1-jre') {
 		exclude group: 'com.google.code.findbugs', module: 'jsr305'
 	}
-
 	compile "io.dropwizard.metrics:metrics-healthchecks:4.0.2"
 	compile	"com.palominolabs.metrics:metrics-guice:4.0.0"
-
-	compile('com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.9.8') {
-		exclude group: 'javax.transaction', module: 'jta'
-	}
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {

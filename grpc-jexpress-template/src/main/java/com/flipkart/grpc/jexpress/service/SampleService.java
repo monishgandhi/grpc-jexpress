@@ -45,14 +45,8 @@ public class SampleService extends UserServiceGrpc.UserServiceImplBase implement
     @Override
     @MethodFilters({GetLoggingFilter.class})
     public void getUser(GetRequest request, StreamObserver<GetResponse> responseObserver) {
-        GetResponse response = GetResponse.newBuilder()
-                .setId(request.getId())
-                .setUserName(userIdToUserNameMap.getOrDefault(request.getId(), "Guest")).build();
-        responseObserver.onNext(response);
-        responseObserver.onCompleted();
         info(sampleConfiguration.toString());
         info(mapConfig.toString());
-
         info("\"database.driverClass\" class in @Named annotation =  " + driverClass);
 
         // Read values from Flattened config
@@ -66,12 +60,19 @@ public class SampleService extends UserServiceGrpc.UserServiceImplBase implement
 
         User user = userDAO.getUserByUserId((long)request.getId());
         info("Get user by id = " + user);
+
+        GetResponse response = GetResponse.newBuilder()
+                .setId(request.getId())
+                .setUserName(userIdToUserNameMap.getOrDefault(request.getId(), "Guest")).build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
     }
 
     @Override
     @MethodFilters({CreateLoggingFilter.class})
     public void createUser(CreateRequest request, StreamObserver<CreateResponse> responseObserver) {
-        int id = lastId.incrementAndGet();
+        Long userId = userDAO.createUser(request.getUserName());
+        int id = userId.intValue();
         userIdToUserNameMap.put(id, request.getUserName());
         CreateResponse response = CreateResponse.newBuilder()
                 .setId(id)
@@ -79,7 +80,5 @@ public class SampleService extends UserServiceGrpc.UserServiceImplBase implement
                         build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
-        userDAO.createUser(request.getUserName());
     }
-
 }

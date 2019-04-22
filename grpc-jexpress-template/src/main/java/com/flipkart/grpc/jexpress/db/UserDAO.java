@@ -19,6 +19,8 @@ import com.flipkart.gjex.hibernate.SelectedDataSource;
 import com.flipkart.gjex.hibernate.SessionFactoryContext;
 import com.flipkart.gjex.hibernate.Transactional;
 import com.flipkart.gjex.hibernate.core.AbstractDAO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.persistence.Query;
@@ -27,6 +29,7 @@ import java.util.List;
 
 /**
  * @Transactional and @SelectedDataSource together can be added at both either method level OR class level OR both.
+ *
  * When added at class level, it means ALL methods inside that class will support @Transactional semantics.
  * When added at method level, it means @Transactional semantics will start at the beginning of this method.
  *
@@ -34,6 +37,9 @@ import java.util.List;
 //@Transactional
 //@SelectedDataSource
 public class UserDAO extends AbstractDAO<User> implements IUserDAO {
+
+    private static final Logger LOG = LoggerFactory.getLogger(UserDAO.class);
+
 
     @Inject
     public UserDAO(SessionFactoryContext sessionFactoryContext) {
@@ -44,18 +50,19 @@ public class UserDAO extends AbstractDAO<User> implements IUserDAO {
     public List<User> getAllUsers() {
         Query query = namedQuery("User.findAll");
         List<User> result = (List<User>) query.getResultList();
-        System.out.println(result);
+        LOG.info("All users : {}", result);
         return result;
     }
 
     @Override
     @Transactional
     @SelectedDataSource
-    public void createUser(String userName) {
+    public Long createUser(String userName) {
         User user = new User();
         user.setName(userName);
-        System.out.println("Saving user in database.");
+        LOG.info("Saving user in database.");
         persist(user);
+        return user.getId();
     }
 
     @Override

@@ -34,7 +34,11 @@ public enum SessionFactoryManager {
     public void registerSessionFactory(String dbName, SessionFactory sessionFactory) {
         Preconditions.checkNotNull(dbName, "dbName cannot be null");
         Preconditions.checkNotNull(sessionFactory, "sessionFactory cannot be null");
-        sessionFactoryMap.putIfAbsent(dbName, sessionFactory);
+        SessionFactory oldValue = sessionFactoryMap.putIfAbsent(dbName, sessionFactory);
+        if (oldValue != null) {
+            String errorMsg = "Duplicate HibernateBundle found with name " + dbName;
+            throw new Error(errorMsg);
+        }
     }
 
     public static SessionFactoryManager getInstance() {
