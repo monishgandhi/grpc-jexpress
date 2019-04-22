@@ -24,7 +24,7 @@ import java.util.Map;
  *
  * @author anand.pandey
  */
-public class HibernateDataSourceFactory {
+public class HibernateDataSource {
 
     /**
      * Returns the configuration properties for hibernate
@@ -75,7 +75,7 @@ public class HibernateDataSourceFactory {
 
     @Override
     public String toString() {
-        return "HibernateDataSourceFactory{" +
+        return "HibernateDataSource{" +
                 "properties=" + properties +
                 ", validationQuery='" + validationQuery + '\'' +
                 ", validationQueryTimeoutInSeconds=" + validationQueryTimeoutInSeconds +

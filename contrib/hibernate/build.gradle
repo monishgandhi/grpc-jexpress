@@ -39,8 +39,8 @@ dependencies {
 			"com.flipkart.grpc-jexpress:runtime:1.2-SNAPSHOT",
 			"com.flipkart.grpc-jexpress:guice:1.2-SNAPSHOT"
 
-	compile 'org.hibernate:hibernate-core:5.4.1.Final'
-	compile 'org.hibernate:hibernate-validator:5.4.1.Final'
+	compile 'org.hibernate:hibernate-core:5.4.2.Final'
+	compile 'org.hibernate:hibernate-validator:5.4.2.Final'
 	compile 'mysql:mysql-connector-java:5.1.38'
 
 	compile('com.google.guava:guava:27.1-jre') {

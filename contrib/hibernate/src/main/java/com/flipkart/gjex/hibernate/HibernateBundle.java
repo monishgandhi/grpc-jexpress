@@ -72,12 +72,12 @@ public abstract class HibernateBundle<T extends GJEXConfiguration, U extends Map
     public void run(T configuration, U configMap, Environment environment) {
         this.configuration = configuration;
         this.configMap = configMap;
-        HibernateDataSourceFactory dataSourceFactory = getDataSourceFactory(configuration);
-        final Map<String, String> hibernateConfig = dataSourceFactory.getProperties();
+        HibernateDataSource dataSource = getDataSource(configuration);
+        final Map<String, String> hibernateConfig = dataSource.getProperties();
         this.sessionFactory = sessionFactoryFactory.build(this, hibernateConfig, entities);
         SessionFactoryManager.getInstance().registerSessionFactory(name(), sessionFactory);
-        SessionFactoryHealthCheck healthCheck = new SessionFactoryHealthCheck(sessionFactory, dataSourceFactory.getValidationQuery(),
-                dataSourceFactory.getValidationQueryTimeoutInSeconds());
+        SessionFactoryHealthCheck healthCheck = new SessionFactoryHealthCheck(sessionFactory, dataSource.getValidationQuery(),
+                dataSource.getValidationQueryTimeoutInSeconds());
         healthChecks.add(healthCheck);
     }
 

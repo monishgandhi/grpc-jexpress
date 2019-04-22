@@ -23,7 +23,7 @@ import com.flipkart.gjex.core.setup.Environment;
 import com.flipkart.gjex.core.tracing.TracingSampler;
 import com.flipkart.gjex.guice.GuiceBundle;
 import com.flipkart.gjex.hibernate.HibernateBundle;
-import com.flipkart.gjex.hibernate.HibernateDataSourceFactory;
+import com.flipkart.gjex.hibernate.HibernateDataSource;
 import com.flipkart.gjex.hibernate.config.HibernateModule;
 import com.flipkart.grpc.jexpress.db.User;
 import com.flipkart.grpc.jexpress.module.SampleModule;
@@ -39,8 +39,8 @@ public class SampleApplication extends Application<SampleConfiguration, Map> {
             new HibernateBundle<SampleConfiguration, Map>(User.class) {
 
                 @Override
-                public HibernateDataSourceFactory getDataSourceFactory(SampleConfiguration configuration) {
-                    return configuration.getDataSourceFactory();
+                public HibernateDataSource getDataSource(SampleConfiguration configuration) {
+                    return configuration.getHibernateDataSource();
                 }
 
                 @Override
