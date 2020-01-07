@@ -98,8 +98,10 @@ public class ConfigModule<T extends GJEXConfiguration, U extends Map> extends Ab
         for (Map.Entry<String, Object> entry: flattenedMap.entrySet()) {
             String key = entry.getKey();
             Object value = entry.getValue();
-            LinkedBindingBuilder annotatedWith = bind(value.getClass()).annotatedWith(Names.named(key));
-            annotatedWith.toInstance(value);
+            if (value != null) {
+                LinkedBindingBuilder annotatedWith = bind(value.getClass()).annotatedWith(Names.named(key));
+                annotatedWith.toInstance(value);
+            }
         }
     }
 

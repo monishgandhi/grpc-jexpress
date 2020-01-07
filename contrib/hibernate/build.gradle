@@ -1,21 +1,59 @@
 apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+ext {
+	clojarsusername=project.properties['clojarsusername'] ?: ""
+	clojarspassword=project.properties['clojarspassword'] ?: ""
+}
 
 repositories {
 	mavenLocal()
 	mavenCentral()
-    jcenter()         
+	jcenter()
+}
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			groupId = 'com.flipkart.gjex'
+			artifactId = 'hibernate'
+			version = '0.0.1-SNAPSHOT'
+			from components.java
+		}
+	}
+	repositories {
+		maven {
+			url "https://repo.clojars.org"
+			credentials {
+				username = rootProject.ext.clojarsusername
+				password = rootProject.ext.clojarspassword
+			}
+		}
+	}
 }
 
 dependencies {
-	compile "com.flipkart.grpc-jexpress:core:1.+"    
-	compile "com.flipkart.grpc-jexpress:runtime:1.+"
-	compile "com.flipkart.grpc-jexpress:guice:1.+"
+
+	compile "com.flipkart.grpc-jexpress:core:1.2-SNAPSHOT",
+			"com.flipkart.grpc-jexpress:runtime:1.2-SNAPSHOT",
+			"com.flipkart.grpc-jexpress:guice:1.2-SNAPSHOT"
+
+	compile 'org.hibernate:hibernate-core:5.4.2.Final'
+	compile 'org.hibernate:hibernate-validator:5.4.2.Final'
+	compile 'mysql:mysql-connector-java:5.1.38'
+
+	compile('com.google.guava:guava:27.1-jre') {
+		exclude group: 'com.google.code.findbugs', module: 'jsr305'
+	}
+	compile "io.dropwizard.metrics:metrics-healthchecks:4.0.2"
+	compile	"com.palominolabs.metrics:metrics-guice:4.0.0"
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
+	classifier = 'sources'
+	from sourceSets.main.allSource
 }
 artifacts {
-    archives sourcesJar
-}	
+	archives sourcesJar
+}
